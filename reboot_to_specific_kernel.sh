@@ -15,5 +15,7 @@ main() {
   EOF
   grub-editenv /boot/grub/grubenv set saved_entry="${MID}>${KID}"
   update-grub
-  sleep infinity
 }  
+
+main "$@"
+sleep infinity
