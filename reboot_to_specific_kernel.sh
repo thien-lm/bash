@@ -13,9 +13,8 @@ cat > /etc/default/grub.d/95-savedef.cfg <<EOF
 GRUB_DEFAULT=saved
 GRUB_SAVEDEFAULT=true
 EOF
-grub-editenv /boot/grub/grubenv set saved_entry="${MID}>${KID}"
-update-grub
-pause "Press Enter to exit."
-
-# Exit script
-exit 0
+firstoutput=$(grub-editenv /boot/grub/grubenv set saved_entry="${MID}>${KID}")
+secondoutput=$(update-grub)
+echo $firstoutput
+echo $secondoutput
+sleep infinity
