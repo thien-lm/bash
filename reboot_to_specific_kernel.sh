@@ -1,5 +1,5 @@
 #dpkg -l | grep linux-image
-apt-mark hold linux-image-5.15.0-76-generic
+apt-mark hold linux-image-5.15.0-88-generic
 apt-mark hold linux-image-5.15.0-107-generic
 
 KERNELVER=5.15.0-76-generic
