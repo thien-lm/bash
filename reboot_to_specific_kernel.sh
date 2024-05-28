@@ -1,4 +1,4 @@
-Thanh Tran Viet
+# Thanh Tran Viet
 #dpkg -l | grep linux-image
 apt-mark hold linux-image-5.15.0-76-generic
 apt-mark hold linux-image-5.15.0-107-generic
