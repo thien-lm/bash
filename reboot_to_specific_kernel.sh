@@ -15,4 +15,7 @@ GRUB_SAVEDEFAULT=true
 EOF
 grub-editenv /boot/grub/grubenv set saved_entry="${MID}>${KID}"
 update-grub
-sleep infinity
+pause "Press Enter to exit."
+
+# Exit script
+exit 0
