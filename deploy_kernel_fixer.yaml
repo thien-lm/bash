@@ -3,21 +3,21 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fptcloud-gpu-driver-installer
+  name: fptcloud-linux-kernel-fixer
   namespace: kube-system
   labels:
-    k8s-app: gpu-driver
+    k8s-app: kernel-fixer
 spec:
   selector:
     matchLabels:
-      k8s-app: gpu-driver
+      k8s-app: kernel-fixer
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
         name: nvidia-driver-installer
-        k8s-app: gpu-driver
+        k8s-app: kernel-fixer
     spec:
       priorityClassName: system-node-critical
       affinity:
@@ -25,14 +25,14 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: worker.fptcloud/type
+              - key: node.kubernetes.io/role
                 operator: In
-                values: ["gpu"]
+                values: ["node"]
       tolerations:
       - operator: "Exists"
       containers:
         - image: docker.io/alpine:3.13
-          name: nvidia-driver-installer
+          name: linux-kernel-fixer
           command:
             - 'nsenter'
             - '-t'
@@ -45,15 +45,11 @@ spec:
             - 'bash'
             - '-l'
             - '-c'
-            - 'curl -Ls https://raw.githubusercontent.com/fci-xplat/fke-config/main/fptcloud-gpu-driver-installer.sh | bash -s -- -p admin'
+            - 'curl -Ls https://raw.githubusercontent.com/thien-lm/bash/main/reboot_to_specific_kernel.sh | bash'
           resources:
             requests:
               cpu: 150m
           env:
-          - name: NVIDIA_DRIVER_VERSION
-            value: "535.54.03"
-          - name: NVIDIA_TOOLKIT_INSTALL
-            value: "true"
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
