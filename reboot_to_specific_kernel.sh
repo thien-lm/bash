@@ -26,8 +26,8 @@ init_kernel_version() {
   echo "Checking Infra Platform"
   if [[ "${INFRA_PLATFORM}" == "VMW" ]]; then
     echo "Infra Platform using VMware"
-    KEEP_KERNEL="5.15.0-76"
-  else
+#     KEEP_KERNEL="5.15.0-76"
+#   else
     KEEP_KERNEL="5.15.0-88"
   fi
 }
