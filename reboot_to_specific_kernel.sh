@@ -26,8 +26,8 @@ init_kernel_version() {
   echo "Checking Infra Platform"
   if [[ "${INFRA_PLATFORM}" == "VMW" ]]; then
     echo "Infra Platform using VMware"
-#     KEEP_KERNEL="5.15.0-76"
-#   else
+    KEEP_KERNEL="5.15.0-76"
+  else
     KEEP_KERNEL="5.15.0-88"
   fi
 }
@@ -42,7 +42,7 @@ update_grub_config() {
   MID=$(awk '/Advanced options for Ubuntu/{print $(NF-1)}' /boot/grub/grub.cfg | cut -d\' -f2)
   KID=$(awk "/with Linux $KEEP_KERNEL/"'{print $(NF-1)}' /boot/grub/grub.cfg | cut -d\' -f2 | head -n1)
 
-  cat > /etc/default/grub.d/95-savedef.cfg < EOF
+  cat > /etc/default/grub.d/95-savedef.cfg << EOF
   GRUB_DEFAULT=saved
   GRUB_SAVEDEFAULT=true
   EOF
@@ -57,14 +57,12 @@ check_kernel_version() {
 }
 
 main() {
-  first_output=$(init_kernel_version)
-  second_output=$(prevent_upgrade_kernel)
-  third_output=$(update_grub_config)
-  fourth_output=$(check_kernel_version)
-  echo $first_output
-  echo $second_output
-  echo $third_output
-  echo $fourth_output
+  init_kernel_version
+  prevent_upgrade_kernel
+  output=$(update_grub_config)
+  output2=$(check_kernel_version)
+  echo $output
+  echo $output2
 }
 
 main "$@"
