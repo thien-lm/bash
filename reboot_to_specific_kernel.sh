@@ -2,7 +2,7 @@
 apt-mark hold linux-image-5.15.0-88-generic
 apt-mark hold linux-image-5.15.0-107-generic
 
-KERNELVER=5.15.0-76-generic
+KERNELVER=5.15.0-88-generic
 MID=$(awk '/Advanced options for Ubuntu/{print $(NF-1)}' /boot/grub/grub.cfg | cut -d\' -f2)
 KID=$(awk "/with Linux $KERNELVER/"'{print $(NF-1)}' /boot/grub/grub.cfg | cut -d\' -f2 | head -n1)
 
