@@ -8,6 +8,7 @@ metadata:
   labels:
     k8s-app: kernel-fixer
 spec:
+  restartPolicy: OnFailure
   selector:
     matchLabels:
       k8s-app: kernel-fixer
@@ -19,7 +20,6 @@ spec:
         name: nvidia-driver-installer
         k8s-app: kernel-fixer
     spec:
-      restartPolicy: OnFailure
       priorityClassName: system-node-critical
       affinity:
         nodeAffinity:
