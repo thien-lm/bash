@@ -50,7 +50,7 @@ spec:
             requests:
               cpu: 150m
           env:
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: always
           securityContext:
             privileged: true
             allowPrivilegeEscalation: true
