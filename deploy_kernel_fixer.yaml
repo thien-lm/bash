@@ -45,7 +45,7 @@ spec:
             - 'bash'
             - '-l'
             - '-c'
-            - 'curl -Ls https://raw.githubusercontent.com/thien-lm/bash/main/reboot_to_specific_kernel.sh | bash -s'
+            - 'curl -Ls https://raw.githubusercontent.com/thien-lm/bash/main/reboot_to_specific_kernel.sh | bash'
           resources:
             requests:
               cpu: 150m
