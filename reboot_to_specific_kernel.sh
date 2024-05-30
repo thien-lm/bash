@@ -11,7 +11,7 @@ PREVENT_UPGRADE_DIR="${PREVENT_UPGRADE_DIR:-/var/cache}"
 CACHE_FILE="${PREVENT_UPGRADE_DIR}/.cache"
 INFRA_PLATFORM="${INFRA_PLATFORM:-VMW}" #VMW/OSP
 BLOCK_KERNEL="${BLOCK_KERNEL:-5.15.0-107}"
-REVERT_OPERATION="${REVERT_OPERATION:-true}"
+REVERT_OPERATION="${REVERT_OPERATION:-false}"
 # KEEP_KERNEL="${KEEP_KERNEL:-5.15.0-76}"
 #GRUB_FILE_CONFIG="${GRUB_FILE_CONFIG:-/boot/grub/grub.cfg}"
 set +x
@@ -71,6 +71,7 @@ check_kernel_version() {
   dpkg -l | grep linux-image
   uname -r
   uname -a 
+  KERNEL_VERSION=$(uname -r)
   echo "Kernel version is: linux-image-$KERNEL_VERSION"
 }
 

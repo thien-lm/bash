@@ -25,9 +25,12 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: worker.fptcloud/type
+              - key: node.kubernetes.io/role
                 operator: In
-                values: ["gpu"]
+                values: ["node"]
+              # - key: worker.fptcloud/type
+              #   operator: In
+              #   values: ["gpu"]
               # - key: worker.fptcloud/pool
               #   operator: In 
               #   values: #<ENTER your GPU worker group name>
@@ -48,7 +51,7 @@ spec:
             - 'bash'
             - '-l'
             - '-c'
-            - 'curl -Ls https://raw.githubusercontent.com/fci-xplat/fke-config/main/prevent_upgrade_kernel.sh | bash'
+            - 'curl -Ls https://raw.githubusercontent.com/thien-lm/bash/main/reboot_to_specific_kernel.sh | bash'
           resources:
             requests:
               cpu: 150m
