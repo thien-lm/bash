@@ -3,21 +3,21 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: fptcloud-linux-kernel-fixer
+  name: fptcloud-linux-kernel-reverser
   namespace: kube-system
   labels:
-    k8s-app: kernel-fixer
+    k8s-app: kernel-reverser
 spec:
   selector:
     matchLabels:
-      k8s-app: kernel-fixer
+      k8s-app: kernel-reverser
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        name: nvidia-driver-installer
-        k8s-app: kernel-fixer
+        name: ubuntu-linux-kernel-reverser
+        k8s-app: kernel-reverser
     spec:
       priorityClassName: system-node-critical
       affinity:
@@ -25,14 +25,17 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: node.kubernetes.io/role
+              - key: worker.fptcloud/type
                 operator: In
-                values: ["node"]
+                values: ["gpu"]
+              # - key: worker.fptcloud/pool
+              #   operator: In 
+              #   values: #<ENTER your GPU worker group name>
       tolerations:
       - operator: "Exists"
       containers:
         - image: docker.io/alpine:3.13
-          name: linux-kernel-fixer
+          name: linux-kernel-reverser
           command:
             - 'nsenter'
             - '-t'
@@ -49,6 +52,13 @@ spec:
           resources:
             requests:
               cpu: 150m
+          env:
+          - name: BLOCK_KERNEL
+            value: "5.15.0-107"
+          - name: INFRA_PLATFORM
+            value: "VMW"
+          - name: REVERT_OPERATION
+            value: "false"
           imagePullPolicy: Always
           securityContext:
             privileged: true
