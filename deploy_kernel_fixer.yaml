@@ -25,15 +25,15 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: node.kubernetes.io/role
-                operator: In
-                values: ["node"]
-              # - key: worker.fptcloud/type
+              # - key: node.kubernetes.io/role
               #   operator: In
-              #   values: ["gpu"]
-              # - key: worker.fptcloud/pool
-              #   operator: In 
-              #   values: #<ENTER your GPU worker group name>
+              #   values: ["node"]
+              - key: worker.fptcloud/type
+                operator: In
+                values: ["gpu"]
+              - key: worker.fptcloud/pool
+                operator: In 
+                values: #<ENTER your GPU worker group name>
       tolerations:
       - operator: "Exists"
       containers:
